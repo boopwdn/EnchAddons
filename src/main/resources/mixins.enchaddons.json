@@ -1,7 +1,7 @@
 {
   "compatibilityLevel": "JAVA_8",
   "minVersion": "0.7",
-  "package": "org.polyfrost.example.mixin",
+  "package": "net.skymoe.enchaddons.mixin",
   "refmap": "mixins.${id}.refmap.json",
   "injectors": {
     "maxShiftBy": 5
