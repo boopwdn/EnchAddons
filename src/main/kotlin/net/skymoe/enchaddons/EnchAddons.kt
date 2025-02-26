@@ -1,13 +1,30 @@
 package net.skymoe.enchaddons
 
-import cc.polyfrost.oneconfig.utils.commands.CommandManager
-import net.skymoe.enchaddons.command.ExampleCommand
-import net.skymoe.enchaddons.config.TestConfig
+import net.skymoe.enchaddons.api.API
+import net.skymoe.enchaddons.event.EventDispatcher
+import net.skymoe.enchaddons.feature.config.FeatureConfig
+import org.apache.logging.log4j.LogManager
+import org.apache.logging.log4j.Logger
+import kotlin.reflect.KClass
 
-object EnchAddons {
-    // Register the config and commands.
-    fun initialize() {
-        TestConfig.initialize()
-        CommandManager.INSTANCE.registerCommand(ExampleCommand)
-    }
+fun getLogger(name: String): Logger = LogManager.getLogger("EnchAddons $name")
+
+val LOGGER = getLogger("Main")
+
+lateinit var theEA: EnchAddons
+
+val EA by ::theEA
+
+interface EnchAddons {
+    val modID: String
+    val modName: String
+    val modVersion: String
+    val workingDirectory: String
+
+    val api: API
+    val eventDispatcher: EventDispatcher
+
+    val configVersion: Int
+
+    fun <T: FeatureConfig> getConfigImpl(type: KClass<T>): T
 }
