@@ -49,4 +49,4 @@ jobs:
       - name: Upload Artifacts
         uses: actions/upload-artifact@v4.6.1
         with:
-          path: ~/versions/1.8.9-forge/build/libs
+          path: ./versions/1.8.9-forge/build/libs
