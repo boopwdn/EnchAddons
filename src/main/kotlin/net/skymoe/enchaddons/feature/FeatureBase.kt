@@ -13,5 +13,5 @@ abstract class FeatureBase<T : FeatureConfig>(
 
     override val eventEntries = buildRegisterEventEntries { registerEvents(this) }
 
-    protected abstract fun registerEvents(register: RegistryEventDispatcher)
+    protected abstract fun registerEvents(dispatcher: RegistryEventDispatcher)
 }

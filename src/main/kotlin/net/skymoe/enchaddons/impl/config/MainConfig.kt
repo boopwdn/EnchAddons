@@ -13,7 +13,7 @@ import net.skymoe.enchaddons.impl.config.adapter.Extract
 import net.skymoe.enchaddons.impl.config.disclaimer.DisclaimerAtOwnRisk
 import net.skymoe.enchaddons.util.printChat
 
-class MainConfig : FeatureImpl(featureInfo<FeatureConfig>("main", "General")) {
+class MainConfig : ConfigImpl(featureInfo<FeatureConfig>("main", "General")) {
     @Transient
     @Extract
     val disclaimer = DisclaimerAtOwnRisk()

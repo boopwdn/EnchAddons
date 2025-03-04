@@ -8,6 +8,8 @@ import net.skymoe.enchaddons.feature.config.FeatureConfig
 import net.skymoe.enchaddons.getLogger
 import net.skymoe.enchaddons.impl.EAImpl
 import net.skymoe.enchaddons.impl.MOD_VERSION
+import net.skymoe.enchaddons.impl.config.feature.DynamicSpotConfigImpl
+import net.skymoe.enchaddons.impl.config.feature.InvincibilityTimerConfigImpl
 import net.skymoe.enchaddons.util.general.inBox
 import kotlin.reflect.KClass
 import kotlin.reflect.full.allSuperclasses
@@ -22,6 +24,12 @@ private val configImplMap = mutableMapOf<KClass<*>, () -> FeatureConfig>()
 object EnchAddonsConfig : Config(Mod("Ench Addons $MOD_VERSION", ModType.SKYBLOCK), "ench_addons.json") {
     @SubConfig
     var main = MainConfig()
+
+    @SubConfig
+    var dynamicSpot = DynamicSpotConfigImpl()
+
+    @SubConfig
+    var invincibilityTimer = InvincibilityTimerConfigImpl()
 
     init {
         initialize()
@@ -46,9 +54,8 @@ object EnchAddonsConfig : Config(Mod("Ench Addons $MOD_VERSION", ModType.SKYBLOC
         logger.info("Increased config version to $version")
     }
 
-    fun <T : FeatureConfig> getConfigImpl(type: KClass<T>): T {
-        return configImplMap[type]?.invoke()?.inBox?.cast<T>()?.also {
+    fun <T : FeatureConfig> getConfigImpl(type: KClass<T>): T =
+        configImplMap[type]?.invoke()?.inBox?.cast<T>()?.also {
             logger.info("Loaded config implementation $it for type $type")
         } ?: throw NotImplementedError("$type")
-    }
 }

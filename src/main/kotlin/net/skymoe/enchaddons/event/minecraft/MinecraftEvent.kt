@@ -18,7 +18,7 @@ sealed interface MinecraftEvent : Event {
 
     sealed interface LoadWorld : MinecraftEvent {
         data class Pre(
-            val world: WorldClient?
+            val world: WorldClient?,
         ) : LoadWorld
     }
 }

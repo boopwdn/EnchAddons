@@ -9,8 +9,11 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 @Mixin(Minecraft.class)
 public class MinecraftMixin {
-    @Inject(method = "startGame", at = @At(value = "RETURN"))
+    @Inject(method = "startGame", at = @At("RETURN"))
     private void onStartGamePost(CallbackInfo ci) {
         MinecraftMixinCallbackKt.startGamePost();
     }
+
+    @Inject(method = "runTick", at = @At("HEAD"))
+    private void onRunTickPre(CallbackInfo ci) { MinecraftMixinCallbackKt.onRunTickPre(); }
 }

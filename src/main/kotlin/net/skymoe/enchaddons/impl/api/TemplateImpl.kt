@@ -20,9 +20,11 @@ class TemplateImpl(
 ) : Template {
     private val st =
         noexcept {
-            cache.getOrPut(template) {
-                ST(group, template)
-            }
+            ST(
+                cache.getOrPut(template) {
+                    ST(group, template)
+                }
+            )
         }
 
     override fun set(

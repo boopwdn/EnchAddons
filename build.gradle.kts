@@ -1,12 +1,13 @@
 @file:Suppress("UnstableApiUsage", "PropertyName")
 
-import org.polyfrost.gradle.util.noServerRunConfigs
 import com.github.jengelman.gradle.plugins.shadow.tasks.ShadowJar
+import org.polyfrost.gradle.util.noServerRunConfigs
 
 // Adds support for kotlin, and adds the Polyfrost Gradle Toolkit
 // which we use to prepare the environment.
 plugins {
     kotlin("jvm")
+    kotlin("plugin.serialization") version "2.1.0"
     id("org.polyfrost.multi-version")
     id("org.polyfrost.defaults.repo")
     id("org.polyfrost.defaults.java")
@@ -52,10 +53,15 @@ loom {
         runConfigs {
             "client" {
                 programArgs("--tweakClass", "cc.polyfrost.oneconfig.loader.stage0.LaunchWrapperTweaker")
-                property("mixin.debug.export", "true") // Outputs all mixin changes to `versions/{mcVersion}/run/.mixin.out/class`
             }
         }
     }
+
+    runConfigs.configureEach {
+        property("mixin.debug.export", "true") // Outputs all mixin changes to `versions/{mcVersion}/run/.mixin.out/class`
+        property("mixin.hotSwap", "true")
+    }
+
     // Configures the mixins if we are building for forge
     if (project.platform.isForge) {
         forge {
@@ -93,7 +99,15 @@ dependencies {
     modCompileOnly("cc.polyfrost:oneconfig-$platform:0.2.2-alpha+")
 
     // Adds DevAuth, which we can use to log in to Minecraft in development.
-    modRuntimeOnly("me.djtheredstoner:DevAuth-${if (platform.isFabric) "fabric" else if (platform.isLegacyForge) "forge-legacy" else "forge-latest"}:1.2.0")
+    modRuntimeOnly(
+        "me.djtheredstoner:DevAuth-${if (platform.isFabric) {
+            "fabric"
+        } else if (platform.isLegacyForge) {
+            "forge-legacy"
+        } else {
+            "forge-latest"
+        }}:1.2.0",
+    )
 
     // If we are building for legacy forge, includes the launch wrapper with `shade` as we configured earlier, as well as mixin 0.7.11
     if (platform.isLegacyForge) {
@@ -104,6 +118,8 @@ dependencies {
     implementation("net.hypixel:mod-api:1.0.1")
     implementation("org.antlr:ST4:4.3.4")
 
+    compileOnly("org.lwjgl:lwjgl:3.3.1")
+    compileOnly("org.lwjgl:lwjgl-nanovg:3.3.1")
     compileOnly(files("${project.rootDir}/libs/oneconfig-internal.jar"))
 }
 
@@ -113,16 +129,18 @@ tasks {
     processResources {
         inputs.property("id", mod_id)
         inputs.property("name", mod_name)
-        val java = if (project.platform.mcMinor >= 18) {
-            17 // If we are playing on version 1.18, set the java version to 17
-        } else {
-            // Else if we are playing on version 1.17, use java 16.
-            if (project.platform.mcMinor == 17)
-                16
-            else
-                8 // For all previous versions, we **need** java 8 (for Forge support).
-        }
-        val compatLevel = "JAVA_${java}"
+        val java =
+            if (project.platform.mcMinor >= 18) {
+                17 // If we are playing on version 1.18, set the java version to 17
+            } else {
+                // Else if we are playing on version 1.17, use java 16.
+                if (project.platform.mcMinor == 17) {
+                    16
+                } else {
+                    8 // For all previous versions, we **need** java 8 (for Forge support).
+                }
+            }
+        val compatLevel = "JAVA_$java"
         inputs.property("java", java)
         inputs.property("java_level", compatLevel)
         inputs.property("version", mod_version)
@@ -135,8 +153,8 @@ tasks {
                     "java" to java,
                     "java_level" to compatLevel,
                     "version" to mod_version,
-                    "mcVersionStr" to project.platform.mcVersionStr
-                )
+                    "mcVersionStr" to project.platform.mcVersionStr,
+                ),
             )
         }
         filesMatching("fabric.mod.json") {
@@ -147,8 +165,8 @@ tasks {
                     "java" to java,
                     "java_level" to compatLevel,
                     "version" to mod_version,
-                    "mcVersionStr" to project.platform.mcVersionStr.substringBeforeLast(".") + ".x"
-                )
+                    "mcVersionStr" to project.platform.mcVersionStr.substringBeforeLast(".") + ".x",
+                ),
             )
         }
     }
@@ -183,13 +201,14 @@ tasks {
     jar {
         // Sets the jar manifest attributes.
         if (platform.isLegacyForge) {
-            manifest.attributes += mapOf(
-                "ModSide" to "CLIENT", // We aren't developing a server-side mod
-                "ForceLoadAsMod" to true, // We want to load this jar as a mod, so we force Forge to do so.
-                "TweakOrder" to "0", // Makes sure that the OneConfig launch wrapper is loaded as soon as possible.
-                "MixinConfigs" to "mixins.${mod_id}.json", // We want to use our mixin configuration, so we specify it here.
-                "TweakClass" to "cc.polyfrost.oneconfig.loader.stage0.LaunchWrapperTweaker" // Loads the OneConfig launch wrapper.
-            )
+            manifest.attributes +=
+                mapOf(
+                    "ModSide" to "CLIENT", // We aren't developing a server-side mod
+                    "ForceLoadAsMod" to true, // We want to load this jar as a mod, so we force Forge to do so.
+                    "TweakOrder" to "0", // Makes sure that the OneConfig launch wrapper is loaded as soon as possible.
+                    "MixinConfigs" to "mixins.${mod_id}.json", // We want to use our mixin configuration, so we specify it here.
+                    "TweakClass" to "cc.polyfrost.oneconfig.loader.stage0.LaunchWrapperTweaker", // Loads the OneConfig launch wrapper.
+                )
         }
         dependsOn(shadowJar)
         archiveClassifier.set("")

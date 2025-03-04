@@ -15,7 +15,7 @@ import cc.polyfrost.oneconfig.internal.config.annotations.Option
 import java.lang.reflect.Field
 import java.lang.reflect.Method
 
-abstract class FeatureImpl(
+abstract class ConfigImpl(
     info: FeatureInfo<*>,
 ) : SubConfig(info.name, info.configFile),
     FeatureConfig {
@@ -23,7 +23,7 @@ abstract class FeatureImpl(
         super.enabled = false
     }
 
-    override val enabled = EnchAddonsConfig.enabled && super.enabled
+    override val enabled get() = EnchAddonsConfig.enabled && super.enabled
 
     override fun getCustomOption(
         field: Field,

@@ -1,5 +1,6 @@
 package net.skymoe.enchaddons.event
 
+import net.skymoe.enchaddons.util.general.inBox
 import kotlin.reflect.KClass
 
 interface EventDispatcher : (Event) -> Unit {
@@ -34,12 +35,12 @@ interface EventDispatcher : (Event) -> Unit {
     fun clear()
 
     fun <T : Event> getHandler(type: KClass<T>): EventHandler<T>
-    fun <T : Event> getHandler(event: T) = getHandler(event::class)
+    fun <T : Event> getHandler(event: T) = getHandler(event::class.inBox.cast<KClass<T>>())
     fun <T : Event> getHandlerOnly(type: KClass<T>): EventHandler<T>
-    fun <T : Event> getHandlerOnly(event: T) = getHandlerOnly(event::class)
+    fun <T : Event> getHandlerOnly(event: T) = getHandlerOnly(event::class.inBox.cast<KClass<T>>())
 
-    override fun invoke(event: Event): Unit {
-        getHandler(event)
+    override fun invoke(event: Event) {
+        getHandler(event)(event)
     }
 }
 

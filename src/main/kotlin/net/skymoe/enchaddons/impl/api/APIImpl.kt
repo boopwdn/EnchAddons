@@ -15,10 +15,10 @@ class APIImpl : API {
     override val templateProvider = ::TemplateImpl
 
     override fun get_GuiChest_lowerChestInventory(instance: GuiScreen): IInventory {
-        return (instance as AccessorGuiChest).getLowerChestInventory()
+        return (instance as AccessorGuiChest).invokeGetLowerChestInventory()
     }
 
     override fun call_GuiScreen_keyTyped(instance: GuiScreen, typedChar: Char, keyCode: Int) {
-        (instance as AccessorGuiScreen).keyTyped(typedChar, keyCode)
+        (instance as AccessorGuiScreen).invokeKeyTyped(typedChar, keyCode)
     }
 }

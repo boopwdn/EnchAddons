@@ -57,10 +57,8 @@ class EventDispatcherImpl : EventDispatcher {
     override fun <T : Event> register(type: KClass<T>, priority: Int, handler: EventHandler<T>) {
         lock.write {
             clearCache()
-            val entry = RegistryEntry(0, handler)
-            parentTypeHandlerMap.values.forEach {
-                it.remove(entry)
-            }
+            unregister(type, handler)
+            parentTypeHandlerMap.getOrPut(type) { TreeSet() }.add(RegistryEntry(priority, handler))
         }
     }
 

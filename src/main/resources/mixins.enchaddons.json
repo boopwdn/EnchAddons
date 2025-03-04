@@ -9,8 +9,13 @@
   "client": [
     "AccessorGuiChest",
     "AccessorGuiScreen",
+    "EntityRendererMixin",
+    "LwjglManagerImplMixin",
     "MainMixin",
     "MinecraftMixin"
   ],
-  "verbose": true
+  "verbose": true,
+  "mixins": [
+    "NetHandlerPlayClientMixin"
+  ]
 }

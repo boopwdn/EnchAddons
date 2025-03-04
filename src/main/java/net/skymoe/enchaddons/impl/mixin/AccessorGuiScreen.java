@@ -20,12 +20,10 @@ package net.skymoe.enchaddons.impl.mixin;
 
 import net.minecraft.client.gui.GuiScreen;
 import org.spongepowered.asm.mixin.Mixin;
-import org.spongepowered.asm.mixin.Unique;
 import org.spongepowered.asm.mixin.gen.Invoker;
 
 @Mixin(GuiScreen.class)
 public interface AccessorGuiScreen {
     @Invoker("keyTyped")
-    @Unique
-    void keyTyped(char typedChar, int keyCode);
+    void invokeKeyTyped(char typedChar, int keyCode);
 }

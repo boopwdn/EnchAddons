@@ -54,8 +54,8 @@ class HypixelModAPIWrapper(
         EA.eventDispatcher(HypixelAPIEvent.Location(null))
     }
 
-    override fun registerEvents(register: RegistryEventDispatcher) {
-        register.run {
+    override fun registerEvents(dispatcher: RegistryEventDispatcher) {
+        dispatcher.run {
             register<MinecraftEvent.Tick.Pre> {
                 resetLocation
             }
