@@ -1,4 +1,4 @@
-package net.skymoe.enchaddons.impl.config.disclaimer
+package net.skymoe.enchaddons.impl.config.announcement
 
 import cc.polyfrost.oneconfig.config.annotations.Info
 import cc.polyfrost.oneconfig.config.data.InfoType

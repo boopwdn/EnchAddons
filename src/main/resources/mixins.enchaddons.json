@@ -12,7 +12,8 @@
     "EntityRendererMixin",
     "LwjglManagerImplMixin",
     "MainMixin",
-    "MinecraftMixin"
+    "MinecraftMixin",
+    "WorldClientMixin"
   ],
   "verbose": true,
   "mixins": [

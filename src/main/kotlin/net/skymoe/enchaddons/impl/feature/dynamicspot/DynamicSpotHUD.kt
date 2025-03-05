@@ -1,4 +1,4 @@
-package net.skymoe.enchaddons.impl.feature
+package net.skymoe.enchaddons.impl.feature.dynamicspot
 
 import net.skymoe.enchaddons.EA
 import net.skymoe.enchaddons.api.format

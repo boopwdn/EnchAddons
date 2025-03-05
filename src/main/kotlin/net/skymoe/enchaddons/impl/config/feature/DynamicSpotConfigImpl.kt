@@ -19,6 +19,12 @@ class DynamicSpotConfigImpl :
     )
     var hud = AdvancedHUD()
 
+    @Extract
+    var background =
+        GUIBackground().apply {
+            radiusOption = 9.3F
+        }
+
     @Text(
         name = "Content",
         size = 2,
@@ -43,9 +49,6 @@ class DynamicSpotConfigImpl :
         instant = true,
     )
     var idleTextHeight = 6F
-
-    @Extract
-    var background = GUIBackground()
 
     @Switch(
         name = "Force Example",

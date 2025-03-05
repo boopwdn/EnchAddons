@@ -10,7 +10,8 @@ import net.skymoe.enchaddons.getLogger
 import net.skymoe.enchaddons.impl.api.APIImpl
 import net.skymoe.enchaddons.impl.config.EnchAddonsConfig
 import net.skymoe.enchaddons.impl.event.EventDispatcherImpl
-import net.skymoe.enchaddons.impl.feature.DynamicSpotHUD
+import net.skymoe.enchaddons.impl.feature.dynamicspot.DynamicSpotHUD
+import net.skymoe.enchaddons.impl.feature.invincibilitytimer.InvincibilityTimerHUD
 import net.skymoe.enchaddons.impl.hypixel.loadHypixelModAPI
 import net.skymoe.enchaddons.theEA
 import kotlin.reflect.KClass
@@ -56,6 +57,7 @@ class EnchAddonsImpl : EnchAddons {
         DynamicSpotHUD
 
         InvincibilityTimer
+        InvincibilityTimerHUD
 
         eventDispatcher.register<MinecraftEvent.Load.Post> {
             loadHypixelModAPI

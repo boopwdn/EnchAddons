@@ -23,7 +23,7 @@ class GUIBackground {
         name = "Background Color",
         size = 2,
     )
-    var backgroundColorOption = OneColor(Colors.GRAY[9].rgb alphaScale 0.8)
+    var backgroundColorOption = OneColor(Colors.GRAY[9].rgb alphaScale 0.95)
 
     @Number(
         name = "Rounded Corner Radius",
@@ -31,7 +31,7 @@ class GUIBackground {
         max = Float.MAX_VALUE,
         size = 1,
     )
-    var radiusOption = 6.0F
+    open var radiusOption = 6.0F
 
     @Number(
         name = "Shadow Blur",

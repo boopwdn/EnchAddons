@@ -10,7 +10,7 @@ import net.skymoe.enchaddons.feature.config.FeatureConfig
 import net.skymoe.enchaddons.feature.featureInfo
 import net.skymoe.enchaddons.impl.EAImpl
 import net.skymoe.enchaddons.impl.config.adapter.Extract
-import net.skymoe.enchaddons.impl.config.disclaimer.DisclaimerAtOwnRisk
+import net.skymoe.enchaddons.impl.config.announcement.DisclaimerAtOwnRisk
 import net.skymoe.enchaddons.util.printChat
 
 class MainConfig : ConfigImpl(featureInfo<FeatureConfig>("main", "General")) {
@@ -64,7 +64,8 @@ class MainConfig : ConfigImpl(featureInfo<FeatureConfig>("main", "General")) {
             name = "Print Hypixel Mod API Location",
             text = "Print",
             size = 1,
-        ) {
+        )
+        {
             printChat(EA.api.hypixelLocation.toString())
         }
 
@@ -75,14 +76,15 @@ class MainConfig : ConfigImpl(featureInfo<FeatureConfig>("main", "General")) {
             name = "Set Dungeon",
             text = "Set",
             size = 1,
-        ) {
+        )
+        {
             EAImpl.api.hypixelLocation =
                 HypixelLocation(
                     "mini0721KLOON",
                     serverType = HypixelServerType("SkyBlock"),
                     null,
                     "dungeon",
-                    "Dungeon"
+                    "Dungeon",
                 )
         }
 }

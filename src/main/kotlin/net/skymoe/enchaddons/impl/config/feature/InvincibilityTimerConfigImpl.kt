@@ -7,60 +7,77 @@ import cc.polyfrost.oneconfig.config.annotations.Text
 import net.skymoe.enchaddons.feature.invincibilitytimer.INVINCIBILITY_TIMER_INFO
 import net.skymoe.enchaddons.feature.invincibilitytimer.InvincibilityTimerConfig
 import net.skymoe.enchaddons.impl.config.ConfigImpl
+import net.skymoe.enchaddons.impl.config.adapter.Extract
+import net.skymoe.enchaddons.impl.config.announcement.DynamicSpotDependent
 
 class InvincibilityTimerConfigImpl :
     ConfigImpl(INVINCIBILITY_TIMER_INFO),
     InvincibilityTimerConfig {
+    @Transient
+    @Extract
+    val dynamicSpotDependent = DynamicSpotDependent()
+
     @Number(
         name = "Phoenix Pet Invincibility Ticks",
         min = 40F,
         max = 80F,
+        subcategory = "General",
     )
-    override val phoenixPetTicks = 40
+    override var phoenixPetTicks = 40
 
-    @Switch(
-        name = "Enabled",
-        size = 1,
-        subcategory = "Dynamic Spot",
-    )
-    override var dynamicSpotEnabled = false
+    class DynamicSpot {
+        @Switch(
+            name = "Enabled",
+            size = 1,
+            subcategory = "Dynamic Spot",
+        )
+        var enabled: Boolean = true
 
-    @Switch(
-        name = "Example Mode",
-        size = 1,
-        subcategory = "DynamicSpot",
-    )
-    override var dynamicSpotExampleMode = false
+        @Transient
+        @Header(
+            text = "In active",
+            size = 2,
+            subcategory = "Dynamic Spot",
+        )
+        val header = false
 
-    @Header(
-        text = "In active",
-        size = 2,
-    )
-    @Text(
-        name = "Left Text",
-        size = 1,
-    )
-    override var dynamicSpotLeftTextActive = "<name>"
+        @Text(
+            name = "Left Text",
+            size = 1,
+            subcategory = "Dynamic Spot",
+        )
+        var leftTextActive: String = "<item.itemInfo.name>"
 
-    @Text(
-        name = "Right Text",
-        size = 1,
-    )
-    override var dynamicSpotRightTextActive = "无敌: <time>"
+        @Text(
+            name = "Right Text",
+            size = 1,
+            subcategory = "Dynamic Spot",
+        )
+        var rightTextActive: String = "IN: <time>"
 
-    @Header(
-        text = "In cooldown",
-        size = 2,
-    )
-    @Text(
-        name = "Left Text",
-        size = 1,
-    )
-    override var dynamicSpotLeftTextCooldown = "<name>"
+        @Transient
+        @Header(
+            text = "In cooldown",
+            size = 2,
+            subcategory = "Dynamic Spot",
+        )
+        val header1 = false
 
-    @Text(
-        name = "Right Text",
-        size = 1,
-    )
-    override var dynamicSpotRightTextCooldown = "冷却: <time>"
+        @Text(
+            name = "Left Text",
+            size = 1,
+            subcategory = "Dynamic Spot",
+        )
+        var leftTextCooldown: String = "<item.itemInfo.name>"
+
+        @Text(
+            name = "Right Text",
+            size = 1,
+            subcategory = "Dynamic Spot",
+        )
+        var rightTextCooldown: String = "CD: <time>"
+    }
+
+    @Extract
+    var dynamicSpot = DynamicSpot()
 }
