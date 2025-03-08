@@ -2,6 +2,20 @@
 
 ---
 
+<div style="display: flex; justify-content: space-between;">
+  <a href="https://github.com/boopwdn/ExeClient/" style="width: 33%; margin: 0; display: block;">
+    <img src="https://raw.githubusercontent.com/boopwdn/ExeClient/refs/heads/main/pictures/banner.png" alt="ExeClient Banner" style="width: 33%;">
+  </a>
+  <a href="https://github.com/boopwdn/YqlossClientMixin/" style="width: 33%; margin: 0; display: block;">
+    <img src="https://raw.githubusercontent.com/boopwdn/YqlossClientMixin/refs/heads/master/banner.png" alt="YqlossClientMixin Banner" style="width: 33%;">
+  </a>
+  <a href="https://github.com/boopwdn/EnchAddons/" style="width: 33%; margin: 0; display: block;">
+    <img src="https://raw.githubusercontent.com/boopwdn/EnchAddons/refs/heads/main/banner.png" alt="EnchAddons Banner" style="width: 33%;">
+  </a>
+</div>
+
+---
+
 ## Own your risk
 - Most modifications are not explicitly legal under the [Hypixel Network](https://support.hypixel.net/hc/en-us/articles/4427624493330-Hypixel-Server-Rules) and [Hypixel Skyblock](https://support.hypixel.net/hc/en-us/articles/4508088842898-Hypixel-SkyBlock-Rules) rules, and you use them at your own risk.
 
