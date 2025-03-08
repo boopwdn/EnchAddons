@@ -15,7 +15,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 public abstract class NetHandlerPlayClientMixin {
     @Shadow private Minecraft gameController;
 
-    @Inject(method = "handleChat", at = @At("TAIL"))
+    @Inject(method = "handleChat", at = @At(value = "INVOKE", target = "Lnet/minecraft/network/PacketThreadUtil;checkThreadAndEnqueue(Lnet/minecraft/network/Packet;Lnet/minecraft/network/INetHandler;Lnet/minecraft/util/IThreadListener;)V", shift = At.Shift.AFTER))
     public void processPacket(S02PacketChat packetIn, CallbackInfo ci) {
 //        if (!gameController.isCallingFromMinecraftThread()) return;
         NetHandlerPlayClientCallback.INSTANCE.onS02PacketChatPost(packetIn);
