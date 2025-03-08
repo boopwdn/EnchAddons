@@ -6,6 +6,6 @@ import cc.polyfrost.oneconfig.config.annotations.CustomOption
 @Target(AnnotationTarget.FIELD)
 @CustomOption(id = "extract")
 annotation class Extract(
-    val category: String = "General",
+    val category: String = "",
     val subCategory: String = "",
 )
