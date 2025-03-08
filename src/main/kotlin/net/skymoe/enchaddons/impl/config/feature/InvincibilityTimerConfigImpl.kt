@@ -4,7 +4,6 @@ import cc.polyfrost.oneconfig.config.annotations.Header
 import cc.polyfrost.oneconfig.config.annotations.Number
 import cc.polyfrost.oneconfig.config.annotations.Switch
 import cc.polyfrost.oneconfig.config.annotations.Text
-import net.skymoe.enchaddons.feature.config.NotificationOption
 import net.skymoe.enchaddons.feature.invincibilitytimer.INVINCIBILITY_TIMER_INFO
 import net.skymoe.enchaddons.feature.invincibilitytimer.InvincibilityTimerConfig
 import net.skymoe.enchaddons.feature.invincibilitytimer.Notification
@@ -104,7 +103,7 @@ class InvincibilityTimerConfigImpl :
         @Extract(
             category = "Notification",
         )
-        override var onItemProcced: NotificationOption = NotificationOptionImpl()
+        override var onItemProcced: NotificationOptionImpl = NotificationOptionImpl()
 
         @Transient
         @Header(
@@ -117,7 +116,7 @@ class InvincibilityTimerConfigImpl :
         @Extract(
             category = "Notification",
         )
-        override var onCooldownEnded: NotificationOption = NotificationOptionImpl()
+        override var onCooldownEnded: NotificationOptionImpl = NotificationOptionImpl()
     }
 
     @Extract(
