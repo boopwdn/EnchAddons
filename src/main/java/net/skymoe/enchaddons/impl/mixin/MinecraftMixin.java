@@ -1,14 +1,18 @@
 package net.skymoe.enchaddons.impl.mixin;
 
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.multiplayer.WorldClient;
 import net.skymoe.enchaddons.impl.mixincallback.MinecraftMixinCallbackKt;
 import org.spongepowered.asm.mixin.Mixin;
+import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 @Mixin(Minecraft.class)
 public class MinecraftMixin {
+    @Shadow public WorldClient theWorld;
+
     @Inject(method = "startGame", at = @At("RETURN"))
     private void onStartGamePost(CallbackInfo ci) {
         MinecraftMixinCallbackKt.startGamePost();
@@ -16,4 +20,11 @@ public class MinecraftMixin {
 
     @Inject(method = "runTick", at = @At("HEAD"))
     private void onRunTickPre(CallbackInfo ci) { MinecraftMixinCallbackKt.onRunTickPre(); }
+
+    @Inject(method = "loadWorld(Lnet/minecraft/client/multiplayer/WorldClient;)V", at = @At("HEAD"))
+    private void onUnloadWorldPre(CallbackInfo ci) {
+        if (theWorld != null) {
+            MinecraftMixinCallbackKt.onWorldUnloadPre(theWorld);
+        }
+    }
 }

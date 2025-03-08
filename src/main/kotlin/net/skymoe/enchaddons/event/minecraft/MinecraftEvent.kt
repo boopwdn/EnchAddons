@@ -16,9 +16,11 @@ sealed interface MinecraftEvent : Event {
         data object Pre : Tick
     }
 
-    sealed interface LoadWorld : MinecraftEvent {
-        data class Post(
-            val world: WorldClient,
-        ) : LoadWorld
+    sealed interface World : MinecraftEvent {
+        sealed interface Unload : World {
+            data class Pre(
+                val world: WorldClient,
+            ) : Unload
+        }
     }
 }
