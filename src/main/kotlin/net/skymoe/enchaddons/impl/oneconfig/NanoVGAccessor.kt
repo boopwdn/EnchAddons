@@ -66,9 +66,29 @@ interface NanoVGAccessor {
         name: String,
     ): Font
 
+    fun loadImageFromByteArray(
+        vg: Long,
+        image: ByteArray,
+    ): Int
+
     fun deleteImages(
         vg: Long,
         images: Set<Int>,
+    )
+
+    fun drawRoundedImage(
+        vg: Long,
+        image: Int,
+        imageXRel: Double,
+        imageYRel: Double,
+        imageWRel: Double,
+        imageHRel: Double,
+        x: Double,
+        y: Double,
+        width: Double,
+        height: Double,
+        alpha: Double,
+        radius: Double,
     )
 
     fun drawRingArc(

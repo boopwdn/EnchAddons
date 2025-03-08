@@ -10,6 +10,7 @@ import net.skymoe.enchaddons.feature.invincibilitytimer.InvincibilityTimer
 import net.skymoe.enchaddons.impl.config.feature.InvincibilityTimerConfigImpl
 import net.skymoe.enchaddons.impl.nanovg.Transformation
 import net.skymoe.enchaddons.impl.nanovg.Widget
+import net.skymoe.enchaddons.impl.nanovg.widget.ImageWidget
 import net.skymoe.enchaddons.impl.nanovg.widget.TextWidget
 import net.skymoe.enchaddons.impl.nanovg.widget.progressBarWidget
 import net.skymoe.enchaddons.impl.oneconfig.fontMedium
@@ -68,9 +69,17 @@ object InvincibilityTimerHUD {
                                             }
                                         }
 
+                                    ImageWidget(
+                                        tr pos Vec2D(.0, -1.0),
+                                        tr size Vec2D(16.0, 16.0),
+                                        item.itemInfo.image,
+                                        1.0,
+                                        tr size 0.0,
+                                    ).also(widgets::add)
+
                                     TextWidget(
                                         leftText,
-                                        tr pos Vec2D(.0, .0),
+                                        tr pos Vec2D(20.0, .0),
                                         Colors.GRAY[0].rgb,
                                         tr size 8.0,
                                         fontMedium,
@@ -88,7 +97,7 @@ object InvincibilityTimerHUD {
 
                                     progressBarWidget(
                                         progress = (item.coolDown.double - partialTicks) / item.itemInfo.coolDown,
-                                        pos1 = tr pos Vec2D(.0, 10.0),
+                                        pos1 = tr pos Vec2D(20.0, 10.0),
                                         pos2 = tr pos Vec2D(dynamicSpotSize.x, 14.0),
                                         colorProgress = Colors.ORANGE[5].rgb,
                                         colorBackground = 0,
@@ -107,7 +116,7 @@ object InvincibilityTimerHUD {
                                                         )
                                                 ) /
                                                     item.itemInfo.invincibilityTicks(),
-                                            pos1 = tr pos Vec2D(.0, 10.0),
+                                            pos1 = tr pos Vec2D(20.0, 10.0),
                                             pos2 = tr pos Vec2D(dynamicSpotSize.x, 14.0),
                                             colorProgress = Colors.GREEN[5].rgb,
                                             colorBackground = 0,

@@ -8,13 +8,14 @@ import net.skymoe.enchaddons.impl.oneconfig.nvg
 import net.skymoe.enchaddons.util.convertARGBToDoubleArray
 import net.skymoe.enchaddons.util.math.float
 import net.skymoe.enchaddons.util.scope.withscope
+import net.skymoe.enchaddons.util.toBuffer
 import org.lwjgl.nanovg.NVGColor
 import org.lwjgl.nanovg.NVGPaint
-import java.nio.ByteBuffer
-import java.util.UUID
 import org.lwjgl.nanovg.NanoVG.*
 import org.lwjgl.nanovg.NanoVGGL3.NVG_IMAGE_NODELETE
 import org.lwjgl.nanovg.NanoVGGL3.nvglCreateImageFromHandle
+import java.nio.ByteBuffer
+import java.util.UUID
 import kotlin.math.asin
 
 private fun NVGColor.fill(argb: Int): NVGColor {
@@ -31,7 +32,10 @@ object NanoVGAccessorImpl : NanoVGAccessor {
         nvg = this
     }
 
-    override fun loadFont(vg: Long, name: String): Font {
+    override fun loadFont(
+        vg: Long,
+        name: String,
+    ): Font {
         val byteArray = javaClass.getResource("/assets/$MOD_ID/font/$name")!!.readBytes()
         val byteBuffer =
             ByteBuffer.allocateDirect(byteArray.size).apply {
@@ -99,7 +103,7 @@ object NanoVGAccessorImpl : NanoVGAccessor {
         }
     }
 
-    private fun drawRoundedImage(
+    override fun drawRoundedImage(
         vg: Long,
         image: Int,
         imageXRel: Double,
@@ -143,6 +147,11 @@ object NanoVGAccessorImpl : NanoVGAccessor {
             nvgFill(vg)
         }
     }
+
+    override fun loadImageFromByteArray(
+        vg: Long,
+        image: ByteArray,
+    ): Int = nvgCreateImageMem(vg, NVG_IMAGE_NEAREST, image.toBuffer())
 
     override fun drawRoundedPlayerAvatar(
         vg: Long,
