@@ -9,6 +9,6 @@ interface InvincibilityTimerConfig : FeatureConfig {
 }
 
 interface Notification {
-    var onItemProcced: NotificationOption
-    var onCooldownEnded: NotificationOption
+    val onItemProcced: NotificationOption
+    val onCooldownEnded: NotificationOption
 }
