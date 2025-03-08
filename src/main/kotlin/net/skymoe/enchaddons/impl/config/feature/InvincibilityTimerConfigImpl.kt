@@ -101,7 +101,9 @@ class InvincibilityTimerConfigImpl :
         )
         val headerItemProcced = false
 
-        @Extract
+        @Extract(
+            category = "Notification",
+        )
         override var onItemProcced: NotificationOption = NotificationOptionImpl()
 
         @Transient
@@ -112,10 +114,14 @@ class InvincibilityTimerConfigImpl :
         )
         val headerCooldownEnded = false
 
-        @Extract
+        @Extract(
+            category = "Notification",
+        )
         override var onCooldownEnded: NotificationOption = NotificationOptionImpl()
     }
 
-    @Extract
+    @Extract(
+        category = "Notification",
+    )
     override var notification = NotificationImpl()
 }

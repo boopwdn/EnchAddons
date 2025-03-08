@@ -1,27 +1,28 @@
 package net.skymoe.enchaddons.impl.mixin;
 
 import cc.polyfrost.oneconfig.config.elements.BasicOption;
-import net.skymoe.enchaddons.impl.config.adapter.Extract;
-import org.spongepowered.asm.mixin.Final;
+import net.skymoe.enchaddons.impl.config.ConfigImplKt;
 import org.spongepowered.asm.mixin.Mixin;
-import org.spongepowered.asm.mixin.Mutable;
-import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
-import org.spongepowered.asm.mixin.injection.Inject;
-import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
+import org.spongepowered.asm.mixin.injection.ModifyVariable;
 
-import java.lang.reflect.Field;
+import java.util.List;
 
-@Mixin(BasicOption.class)
+@Mixin(value = BasicOption.class, remap = false)
 public class BasicOptionMixin {
-    @Mutable
-    @Shadow @Final public String category;
+    @ModifyVariable(method = "<init>", at = @At("HEAD"), ordinal = 4, argsOnly = true)
+    private String initBasicOptionCategory(String category) {
+        List<String> categoryOverride = ConfigImplKt.getCategoryOverride();
 
-    @Inject(method = "<init>", at = @At("TAIL"))
-    private void initBasicOption(Field field, Object parent, String name, String description, String category, String subcategory, int size, CallbackInfo ci) {
-        Extract extract = field.getAnnotation(Extract.class);
-        if (extract != null) {
-            this.category = extract.category();
-        }
+        if (!categoryOverride.isEmpty()) return categoryOverride.get(categoryOverride.size() - 1);
+        return category;
+    }
+
+    @ModifyVariable(method = "<init>", at = @At("HEAD"), ordinal = 5, argsOnly = true)
+    private String initBasicOptionSubCategory(String subCategory) {
+        List<String> subCategoryOverride = ConfigImplKt.getSubCategoryOverride();
+
+        if (!subCategoryOverride.isEmpty()) return subCategoryOverride.get(subCategoryOverride.size() - 1);
+        return subCategory;
     }
 }
