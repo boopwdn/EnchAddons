@@ -3,26 +3,40 @@ package net.skymoe.enchaddons.impl.mixin;
 import cc.polyfrost.oneconfig.config.elements.BasicOption;
 import net.skymoe.enchaddons.impl.config.ConfigImplKt;
 import org.spongepowered.asm.mixin.Mixin;
+import org.spongepowered.asm.mixin.Unique;
 import org.spongepowered.asm.mixin.injection.At;
-import org.spongepowered.asm.mixin.injection.ModifyVariable;
+import org.spongepowered.asm.mixin.injection.Inject;
+import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
+import java.lang.reflect.Field;
 import java.util.List;
 
 @Mixin(value = BasicOption.class, remap = false)
-public class BasicOptionMixin {
-    @ModifyVariable(method = "<init>", at = @At("HEAD"), ordinal = 4, argsOnly = true)
-    private String initBasicOptionCategory(String category) {
-        List<String> categoryOverride = ConfigImplKt.getCategoryOverride();
+public abstract class BasicOptionMixin {
+    @Unique
+    private static final Field categoryField;
 
-        if (!categoryOverride.isEmpty()) return categoryOverride.get(categoryOverride.size() - 1);
-        return category;
+    @Unique
+    private static final Field subcategoryField;
+
+    static {
+        try {
+            categoryField = BasicOption.class.getDeclaredField("category");
+            categoryField.setAccessible(true);
+
+            subcategoryField = BasicOption.class.getDeclaredField("subcategory");
+            subcategoryField.setAccessible(true);
+        } catch (NoSuchFieldException e) {
+            throw new RuntimeException(e);
+        }
     }
 
-    @ModifyVariable(method = "<init>", at = @At("HEAD"), ordinal = 5, argsOnly = true)
-    private String initBasicOptionSubCategory(String subCategory) {
+    @Inject(method = "<init>", at = @At("RETURN"))
+    private void setOverrideCategory(Field field, Object parent, String name, String description, String category, String subcategory, int size, CallbackInfo ci) throws IllegalAccessException {
+        List<String> categoryOverride = ConfigImplKt.getCategoryOverride();
         List<String> subCategoryOverride = ConfigImplKt.getSubCategoryOverride();
 
-        if (!subCategoryOverride.isEmpty()) return subCategoryOverride.get(subCategoryOverride.size() - 1);
-        return subCategory;
+        if (!categoryOverride.isEmpty()) categoryField.set(this, categoryOverride.get(categoryOverride.size() - 1));
+        if (!subCategoryOverride.isEmpty()) subcategoryField.set(this, subCategoryOverride.get(subCategoryOverride.size() - 1));
     }
 }
