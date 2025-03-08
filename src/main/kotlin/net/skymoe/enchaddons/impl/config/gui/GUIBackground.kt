@@ -70,7 +70,7 @@ class GUIBackground {
                     tr size size,
                     tr size Vec2D(paddingXOption, paddingYOption),
                     backgroundColorOption.rgb,
-                    tr size radiusOption.double,
+                    tr size minOf(radiusOption.double, size.x / 2.0 + paddingXOption, size.y / 2.0 + paddingYOption),
                     tr size shadowBlur.double,
                 ),
             )

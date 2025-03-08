@@ -15,6 +15,8 @@ import net.skymoe.enchaddons.impl.nanovg.WidgetAnimation
 import net.skymoe.enchaddons.impl.nanovg.widget.TextWidget
 import net.skymoe.enchaddons.impl.oneconfig.fontMedium
 import net.skymoe.enchaddons.util.Colors
+import net.skymoe.enchaddons.util.inPlaceMap
+import net.skymoe.enchaddons.util.math.ExponentialAnimation
 import net.skymoe.enchaddons.util.math.Vec2D
 
 object DynamicSpotHUD : FeatureHUDBase<DynamicSpotConfigImpl, DynamicSpot>(DynamicSpot, { config.hud }) {
@@ -32,7 +34,7 @@ object DynamicSpotHUD : FeatureHUDBase<DynamicSpotConfigImpl, DynamicSpot>(Dynam
     override val height: Double
         get() = NowSize.height
 
-    override val fadeOut = 3000000000L
+    override val fadeOut = 0L
 
     override val example get() = super.example || config.forceExample
 
@@ -44,6 +46,8 @@ object DynamicSpotHUD : FeatureHUDBase<DynamicSpotConfigImpl, DynamicSpot>(Dynam
     private var animationsMap: HashMap<DynamicSpotElement, WidgetAnimation> = hashMapOf()
 
     private const val GAP = 4.0
+
+    private val alphaAnimation = ExponentialAnimation(0.0)
 
     private fun updateRegistry(elements: MutableList<DynamicSpotElement>) {
         elementsRegistry =
@@ -79,8 +83,8 @@ object DynamicSpotHUD : FeatureHUDBase<DynamicSpotConfigImpl, DynamicSpot>(Dynam
 
         config.background.addTo(widgets, tr, NowSize.toVec2D())
 
-        val dynamicSpotWidth = elementsRegistry.maxOf { it.size.x }
-        val dynamicSpotHeight = elementsRegistry.sumOf { it.size.y }
+        val dynamicSpotWidth = elementsRegistry.map { it.size.x }.plus(0.0).max()
+        val dynamicSpotHeight = elementsRegistry.map { it.size.y }.plus(0.0).sum()
 
         targetSize = Vec2D(dynamicSpotWidth, dynamicSpotHeight + (elementsRegistry.size - 1) * GAP)
 
@@ -98,6 +102,11 @@ object DynamicSpotHUD : FeatureHUDBase<DynamicSpotConfigImpl, DynamicSpot>(Dynam
 
                     val smoothY = animation.smoothY.approach(currentY, 0.35)
                     val smoothTR = tr + Vec2D(0.0, smoothY)
+
+                    if (!element.isFadeOut) {
+                        val smoothAlpha = animation.smoothAlpha.approach(1.0, 0.2)
+                        widgetsNow.inPlaceMap { it.alphaScale(smoothAlpha) }
+                    }
 
                     element.draw(widgetsNow, smoothTR, NowSize.toVec2D())
 
@@ -126,12 +135,19 @@ object DynamicSpotHUD : FeatureHUDBase<DynamicSpotConfigImpl, DynamicSpot>(Dynam
                 NowSize.width = it.x
                 NowSize.height = it.y
             }
+
+        if (!config.idleEnabled && elementsRegistry.isEmpty()) {
+            widgets.inPlaceMap { it.alphaScale(alphaAnimation.approach(0.0, 0.5)) }
+        } else {
+            alphaAnimation.set(1.0)
+        }
     }
 
     override fun registerEvents(dispatcher: RegistryEventDispatcher) {
         super.registerEvents(dispatcher)
         dispatcher.run {
             register<DynamicSpotEvent.Render.Idle> { event ->
+                if (!config.idleEnabled) return@register
                 object : DynamicSpotElement() {
                     override fun draw(
                         widgets: MutableList<Widget<*>>,

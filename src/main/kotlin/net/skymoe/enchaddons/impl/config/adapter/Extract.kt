@@ -5,4 +5,7 @@ import cc.polyfrost.oneconfig.config.annotations.CustomOption
 @Retention(AnnotationRetention.RUNTIME)
 @Target(AnnotationTarget.FIELD)
 @CustomOption(id = "extract")
-annotation class Extract
+annotation class Extract(
+    val category: String = "General",
+    val subCategory: String = "",
+)

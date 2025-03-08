@@ -5,7 +5,7 @@ import net.skymoe.enchaddons.util.math.Vec2D
 
 class WidgetAnimation {
     private var lastShow = false
-    private val smoothAlpha = ExponentialAnimation(0.0)
+    val smoothAlpha = ExponentialAnimation(0.0)
     private val smoothScale = ExponentialAnimation(0.0)
     val smoothY = ExponentialAnimation(0.0)
     private var lastShowFadeOut = false

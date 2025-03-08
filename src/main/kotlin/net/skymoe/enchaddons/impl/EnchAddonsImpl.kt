@@ -8,6 +8,7 @@ import net.skymoe.enchaddons.feature.dynamicspot.DynamicSpot
 import net.skymoe.enchaddons.feature.invincibilitytimer.InvincibilityTimer
 import net.skymoe.enchaddons.getLogger
 import net.skymoe.enchaddons.impl.api.APIImpl
+import net.skymoe.enchaddons.impl.cache.ResourceCacheImpl
 import net.skymoe.enchaddons.impl.config.EnchAddonsConfig
 import net.skymoe.enchaddons.impl.event.EventDispatcherImpl
 import net.skymoe.enchaddons.impl.feature.dynamicspot.DynamicSpotHUD
@@ -33,11 +34,6 @@ const val MOD_NAME: String = "Ench Addons"
 const val MOD_VERSION: String = "0.1.0"
 
 class EnchAddonsImpl : EnchAddons {
-    init {
-        theEA = this
-        theEAImpl = this
-    }
-
     override val modID = MOD_ID
     override val modName: String = MOD_NAME
     override val modVersion: String = MOD_VERSION
@@ -51,7 +47,11 @@ class EnchAddonsImpl : EnchAddons {
     override fun <T : FeatureConfig> getConfigImpl(type: KClass<T>) = EnchAddonsConfig.getConfigImpl(type)
 
     init {
+        theEA = this
+        theEAImpl = this
+
         EnchAddonsConfig
+        ResourceCacheImpl
 
         DynamicSpot
         DynamicSpotHUD

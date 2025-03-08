@@ -45,5 +45,5 @@ interface EnchAddons {
 
     val configVersion: Int
 
-    fun <T: FeatureConfig> getConfigImpl(type: KClass<T>): T
+    fun <T : FeatureConfig> getConfigImpl(type: KClass<T>): T
 }

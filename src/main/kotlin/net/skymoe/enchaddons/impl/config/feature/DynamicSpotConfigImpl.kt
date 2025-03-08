@@ -25,6 +25,13 @@ class DynamicSpotConfigImpl :
             radiusOption = 9.3F
         }
 
+    @Switch(
+        name = "Enabled",
+        size = 2,
+        subcategory = "Idle state",
+    )
+    var idleEnabled = true
+
     @Text(
         name = "Content",
         size = 2,

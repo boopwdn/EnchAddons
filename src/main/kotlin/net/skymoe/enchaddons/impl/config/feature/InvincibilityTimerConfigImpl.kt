@@ -4,11 +4,14 @@ import cc.polyfrost.oneconfig.config.annotations.Header
 import cc.polyfrost.oneconfig.config.annotations.Number
 import cc.polyfrost.oneconfig.config.annotations.Switch
 import cc.polyfrost.oneconfig.config.annotations.Text
+import net.skymoe.enchaddons.feature.config.NotificationOption
 import net.skymoe.enchaddons.feature.invincibilitytimer.INVINCIBILITY_TIMER_INFO
 import net.skymoe.enchaddons.feature.invincibilitytimer.InvincibilityTimerConfig
+import net.skymoe.enchaddons.feature.invincibilitytimer.Notification
 import net.skymoe.enchaddons.impl.config.ConfigImpl
 import net.skymoe.enchaddons.impl.config.adapter.Extract
 import net.skymoe.enchaddons.impl.config.announcement.DynamicSpotDependent
+import net.skymoe.enchaddons.impl.config.impl.NotificationOptionImpl
 
 class InvincibilityTimerConfigImpl :
     ConfigImpl(INVINCIBILITY_TIMER_INFO),
@@ -21,6 +24,7 @@ class InvincibilityTimerConfigImpl :
         name = "Phoenix Pet Invincibility Ticks",
         min = 40F,
         max = 80F,
+        category = "General",
         subcategory = "General",
     )
     override var phoenixPetTicks = 40
@@ -29,6 +33,7 @@ class InvincibilityTimerConfigImpl :
         @Switch(
             name = "Enabled",
             size = 1,
+            category = "General",
             subcategory = "Dynamic Spot",
         )
         var enabled: Boolean = true
@@ -37,6 +42,7 @@ class InvincibilityTimerConfigImpl :
         @Header(
             text = "In active",
             size = 2,
+            category = "General",
             subcategory = "Dynamic Spot",
         )
         val header = false
@@ -44,6 +50,7 @@ class InvincibilityTimerConfigImpl :
         @Text(
             name = "Left Text",
             size = 1,
+            category = "General",
             subcategory = "Dynamic Spot",
         )
         var leftTextActive: String = "<item.itemInfo.name>"
@@ -51,6 +58,7 @@ class InvincibilityTimerConfigImpl :
         @Text(
             name = "Right Text",
             size = 1,
+            category = "General",
             subcategory = "Dynamic Spot",
         )
         var rightTextActive: String = "IN: <time>"
@@ -59,6 +67,7 @@ class InvincibilityTimerConfigImpl :
         @Header(
             text = "In cooldown",
             size = 2,
+            category = "General",
             subcategory = "Dynamic Spot",
         )
         val header1 = false
@@ -66,6 +75,7 @@ class InvincibilityTimerConfigImpl :
         @Text(
             name = "Left Text",
             size = 1,
+            category = "General",
             subcategory = "Dynamic Spot",
         )
         var leftTextCooldown: String = "<item.itemInfo.name>"
@@ -73,6 +83,7 @@ class InvincibilityTimerConfigImpl :
         @Text(
             name = "Right Text",
             size = 1,
+            category = "General",
             subcategory = "Dynamic Spot",
         )
         var rightTextCooldown: String = "CD: <time>"
@@ -80,4 +91,31 @@ class InvincibilityTimerConfigImpl :
 
     @Extract
     var dynamicSpot = DynamicSpot()
+
+    class NotificationImpl : Notification {
+        @Transient
+        @Header(
+            text = "Notification On Item Procced",
+            size = 2,
+            category = "Notification",
+        )
+        val headerItemProcced = false
+
+        @Extract
+        override var onItemProcced: NotificationOption = NotificationOptionImpl()
+
+        @Transient
+        @Header(
+            text = "Notification On Cooldown Ended",
+            size = 2,
+            category = "Notification",
+        )
+        val headerCooldownEnded = false
+
+        @Extract
+        override var onCooldownEnded: NotificationOption = NotificationOptionImpl()
+    }
+
+    @Extract
+    override var notification = NotificationImpl()
 }

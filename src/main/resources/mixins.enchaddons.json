@@ -12,11 +12,11 @@
     "EntityRendererMixin",
     "LwjglManagerImplMixin",
     "MainMixin",
-    "MinecraftMixin",
-    "WorldClientMixin"
+    "MinecraftMixin"
   ],
   "verbose": true,
   "mixins": [
+    "BasicOptionMixin",
     "NetHandlerPlayClientMixin"
   ]
 }
