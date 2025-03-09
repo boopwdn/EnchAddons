@@ -1,6 +1,8 @@
-![EnchAddons](https://socialify.git.ci/boopwdn/EnchAddons/image?description=1&font=Raleway&forks=1&issues=1&logo=https%3A%2F%2Fraw.githubusercontent.com%2Fboopwdn%2FEnchAddons%2Frefs%2Fheads%2Fmain%2Fsrc%2Fmain%2Fresources%2Fassets%2Fenchaddons%2Fimages%2Flogo.svg&name=1&owner=1&pattern=Plus&pulls=1&stargazers=1&theme=Auto)
+[![EnchAddons](https://socialify.git.ci/boopwdn/EnchAddons/image?description=1&font=Raleway&forks=1&issues=1&logo=https%3A%2F%2Fraw.githubusercontent.com%2Fboopwdn%2FEnchAddons%2Frefs%2Fheads%2Fmain%2Fsrc%2Fmain%2Fresources%2Fassets%2Fenchaddons%2Fimages%2Flogo.svg&name=1&owner=1&pattern=Plus&pulls=1&stargazers=1&theme=Auto)](https://github.com/boopwdn/EnchAddons)
 
 ---
+
+## Related Projects
 
 <div>
   <p align="center">
@@ -12,22 +14,46 @@
 
 ---
 
-## Own your risk
-- Most modifications are not explicitly legal under the [Hypixel Network](https://support.hypixel.net/hc/en-us/articles/4427624493330-Hypixel-Server-Rules) and [Hypixel Skyblock](https://support.hypixel.net/hc/en-us/articles/4508088842898-Hypixel-SkyBlock-Rules) rules, and you use them at your own risk.
+> [!CAUTION]
+> ### ⚠️ **Disclaimer** ⚠️
+>
+> Please be aware that most modifications may not be explicitly legal under the [Hypixel Network](https://support.hypixel.net/hc/en-us/articles/4427624493330-Hypixel-Server-Rules) and [Hypixel Skyblock](https://support.hypixel.net/hc/en-us/articles/4508088842898-Hypixel-SkyBlock-Rules) rules.  Use this Mod at your own risk.
 
-## Feature
-- DynamicSpot
-- InvincibilityTimer
+---
 
-## Installation
-- Configure Minecraft 1.8.9 with **Forge Mod Loader**.
-- Download from [**release**](https://github.com/boopwdn/EnchAddons/releases) or [**actions**](https://github.com/boopwdn/EnchAddons/actions) but not any other place.
-- Put the jar file like `EnchAddons-0.1.0.jar` into your mod folder.
-- Open your game and enable features you need.
-- Enjoy it!
+## ✨ **Features** ✨
 
-## Credits
-- [YqlossClientMixin](https://github.com/boopwdn/YqlossClientMixin) provides ClientBase ideas and code for this project.
-- [Yqloss](https://github.com/Yqloss) & [Water-OR](https://github.com/Water-OR) answer my questions and code for this project.
-- [OneConfig](https://polyfrost.org/projects/oneconfig/) provides config API.  
-  ![Minimal Powered by OneConfig](https://polyfrost.org/media/branding/badges/badge_3.svg)
+*   **DynamicSpot:** A elegant dynamic centralized event notifier.
+*   **InvincibilityTimer:** Active and cooldown time display for invincibility items such as `Spirit Mask`.
+
+---
+
+## 🛠️ Installation Guide 🛠️
+
+1.  **Prerequisites:** Make sure you have Minecraft 1.8.9 installed with **Forge Mod Loader**.
+2.  **Download Mod:** Download the latest jar file from [**Releases**](https://github.com/boopwdn/EnchAddons/releases) or [**Actions**](https://github.com/boopwdn/EnchAddons/actions). **Do not download from other sources.**
+3.  **Install Mod:** Place the downloaded `EnchAddons-x.x.x.jar` file into your Minecraft's `mods` folder.
+4.  **Launch Game:** Launch Minecraft and enable the features you want to use.
+5.  **Enjoy the game!**
+
+---
+
+## ❤️ Credits ❤️
+
+*   [YqlossClientMixin](https://github.com/boopwdn/YqlossClientMixin): Provides ClientBase ideas and code for this project.
+*   [Yqloss](https://github.com/Yqloss) & [Water-OR](https://github.com/Water-OR): Answered my questions and provided code support for this project.
+*   [OneConfig](https://polyfrost.org/projects/oneconfig/): Provides Config API.
+
+    [![Minimal Powered by OneConfig](https://polyfrost.org/media/branding/badges/badge_3.svg)](https://polyfrost.org/projects/oneconfig/)
+
+---
+
+## 🤝 Contributing 🤝
+
+Contributions are welcome! Feel free to submit issues and pull requests.
+
+---
+
+## 📄 License 📄
+
+This project is licensed under the [GPLv2 License](LICENSE).
