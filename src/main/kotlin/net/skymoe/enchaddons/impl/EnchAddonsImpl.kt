@@ -29,9 +29,9 @@ val initEnchAddonsImpl by lazy {
     LOGGER.info("Initialized EnchAddonsImpl")
 }
 
-const val MOD_ID: String = "enchaddons"
-const val MOD_NAME: String = "Ench Addons"
-const val MOD_VERSION: String = "0.1.0"
+const val MOD_ID: String = "@ID@"
+const val MOD_NAME: String = "@NAME@"
+const val MOD_VERSION: String = "@VER@"
 
 class EnchAddonsImpl : EnchAddons {
     override val modID = MOD_ID
