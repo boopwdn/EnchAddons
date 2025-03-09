@@ -14,10 +14,12 @@
 
 ---
 
+### ⚠️ **Disclaimer** ⚠️
 > [!CAUTION]
-> ### ⚠️ **Disclaimer** ⚠️
 >
-> Please be aware that most modifications may not be explicitly legal under the [Hypixel Network](https://support.hypixel.net/hc/en-us/articles/4427624493330-Hypixel-Server-Rules) and [Hypixel Skyblock](https://support.hypixel.net/hc/en-us/articles/4508088842898-Hypixel-SkyBlock-Rules) rules.  Use this Mod at your own risk.
+> Please be aware that most modifications may **NOT** be **explicitly legal** under the [**Hypixel Network**](https://support.hypixel.net/hc/en-us/articles/4427624493330-Hypixel-Server-Rules) and [**Hypixel Skyblock**](https://support.hypixel.net/hc/en-us/articles/4508088842898-Hypixel-SkyBlock-Rules) rules.
+> 
+> **Use this Mod at your own risk.**
 
 ---
 
