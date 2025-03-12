@@ -1,7 +1,15 @@
 package net.skymoe.enchaddons.impl.cache
 
 import net.skymoe.enchaddons.impl.MOD_ID
+import net.skymoe.enchaddons.impl.oneconfig.nvg
 import kotlin.collections.HashMap
+
+fun getImageLoader(path: String): (Long) -> Int {
+    var image: Int? = null
+    return { vg ->
+        (image ?: nvg.loadImageFromByteArray(vg, ResourceCacheImpl.get(path))).also { image = it }
+    }
+}
 
 object ResourceCacheImpl {
     private val cacheMap: HashMap<String, ByteArray> = hashMapOf()

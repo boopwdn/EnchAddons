@@ -1,15 +1,7 @@
 package net.skymoe.enchaddons.feature.invincibilitytimer
 
 import net.skymoe.enchaddons.feature.invincibilitytimer.InvincibilityTimer.InvincibilityItem
-import net.skymoe.enchaddons.impl.cache.ResourceCacheImpl
-import net.skymoe.enchaddons.impl.oneconfig.nvg
-
-private fun getImageLoader(path: String): (Long) -> Int {
-    var image: Int? = null
-    return { vg ->
-        (image ?: nvg.loadImageFromByteArray(vg, ResourceCacheImpl.get(path))).also { image = it }
-    }
-}
+import net.skymoe.enchaddons.impl.cache.getImageLoader
 
 val INVINCIBILITY_ITEMS: List<InvincibilityItem> =
     listOf(
