@@ -10,6 +10,7 @@ import net.skymoe.enchaddons.impl.EAImpl
 import net.skymoe.enchaddons.impl.MOD_VERSION
 import net.skymoe.enchaddons.impl.config.feature.DynamicSpotConfigImpl
 import net.skymoe.enchaddons.impl.config.feature.InvincibilityTimerConfigImpl
+import net.skymoe.enchaddons.impl.config.feature.TeamSpeakConnectConfigImpl
 import net.skymoe.enchaddons.util.general.inBox
 import kotlin.reflect.KClass
 import kotlin.reflect.full.allSuperclasses
@@ -30,6 +31,9 @@ object EnchAddonsConfig : Config(Mod("Ench Addons $MOD_VERSION", ModType.SKYBLOC
 
     @SubConfig
     var invincibilityTimer = InvincibilityTimerConfigImpl()
+
+    @SubConfig
+    var teamSpeakConnectConfig = TeamSpeakConnectConfigImpl()
 
     init {
         initialize()

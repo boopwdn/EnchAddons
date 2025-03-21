@@ -6,6 +6,7 @@ import net.skymoe.enchaddons.event.register
 import net.skymoe.enchaddons.feature.config.FeatureConfig
 import net.skymoe.enchaddons.feature.dynamicspot.DynamicSpot
 import net.skymoe.enchaddons.feature.invincibilitytimer.InvincibilityTimer
+import net.skymoe.enchaddons.feature.teamspeakconnect.TeamSpeakConnect
 import net.skymoe.enchaddons.getLogger
 import net.skymoe.enchaddons.impl.api.APIImpl
 import net.skymoe.enchaddons.impl.cache.ResourceCacheImpl
@@ -13,6 +14,7 @@ import net.skymoe.enchaddons.impl.config.EnchAddonsConfig
 import net.skymoe.enchaddons.impl.event.EventDispatcherImpl
 import net.skymoe.enchaddons.impl.feature.dynamicspot.DynamicSpotHUD
 import net.skymoe.enchaddons.impl.feature.invincibilitytimer.InvincibilityTimerHUD
+import net.skymoe.enchaddons.impl.feature.teamspeakconnect.TeamSpeakConnectHUD
 import net.skymoe.enchaddons.impl.hypixel.loadHypixelModAPI
 import net.skymoe.enchaddons.theEA
 import kotlin.reflect.KClass
@@ -58,6 +60,9 @@ class EnchAddonsImpl : EnchAddons {
 
         InvincibilityTimer
         InvincibilityTimerHUD
+
+        TeamSpeakConnect
+        TeamSpeakConnectHUD
 
         eventDispatcher.register<MinecraftEvent.Load.Post> {
             loadHypixelModAPI
