@@ -118,7 +118,7 @@ dependencies {
     implementation("net.hypixel:mod-api:1.0.1")
     implementation("org.antlr:ST4:4.3.4")
 
-    implementation("com.squareup.okhttp3:okhttp:4.12.0")
+    shade("com.squareup.okhttp3:okhttp:4.12.0")
 
     compileOnly("org.lwjgl:lwjgl:3.3.1")
     compileOnly("org.lwjgl:lwjgl-nanovg:3.3.1")
