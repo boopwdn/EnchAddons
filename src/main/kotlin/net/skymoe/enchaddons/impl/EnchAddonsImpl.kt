@@ -4,6 +4,7 @@ import net.skymoe.enchaddons.EnchAddons
 import net.skymoe.enchaddons.event.minecraft.MinecraftEvent
 import net.skymoe.enchaddons.event.register
 import net.skymoe.enchaddons.feature.config.FeatureConfig
+import net.skymoe.enchaddons.feature.dynamickeybind.DynamicKeyBinding
 import net.skymoe.enchaddons.feature.dynamicspot.DynamicSpot
 import net.skymoe.enchaddons.feature.invincibilitytimer.InvincibilityTimer
 import net.skymoe.enchaddons.feature.teamspeakconnect.TeamSpeakConnect
@@ -12,6 +13,7 @@ import net.skymoe.enchaddons.impl.api.APIImpl
 import net.skymoe.enchaddons.impl.cache.ResourceCacheImpl
 import net.skymoe.enchaddons.impl.config.EnchAddonsConfig
 import net.skymoe.enchaddons.impl.event.EventDispatcherImpl
+import net.skymoe.enchaddons.impl.feature.dynamickeybinding.DynamicKeyBindingHUD
 import net.skymoe.enchaddons.impl.feature.dynamicspot.DynamicSpotHUD
 import net.skymoe.enchaddons.impl.feature.invincibilitytimer.InvincibilityTimerHUD
 import net.skymoe.enchaddons.impl.feature.teamspeakconnect.TeamSpeakConnectHUD
@@ -57,6 +59,9 @@ class EnchAddonsImpl : EnchAddons {
 
         DynamicSpot
         DynamicSpotHUD
+
+        DynamicKeyBinding
+        DynamicKeyBindingHUD
 
         InvincibilityTimer
         InvincibilityTimerHUD
