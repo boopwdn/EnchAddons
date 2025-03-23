@@ -8,6 +8,7 @@ import net.skymoe.enchaddons.feature.config.FeatureConfig
 import net.skymoe.enchaddons.getLogger
 import net.skymoe.enchaddons.impl.EAImpl
 import net.skymoe.enchaddons.impl.MOD_VERSION
+import net.skymoe.enchaddons.impl.config.feature.DynamicKeyBindingConfigImpl
 import net.skymoe.enchaddons.impl.config.feature.DynamicSpotConfigImpl
 import net.skymoe.enchaddons.impl.config.feature.InvincibilityTimerConfigImpl
 import net.skymoe.enchaddons.impl.config.feature.TeamSpeakConnectConfigImpl
@@ -30,6 +31,9 @@ object EnchAddonsConfig : Config(Mod("Ench Addons $MOD_VERSION", ModType.SKYBLOC
     var dynamicSpot = DynamicSpotConfigImpl()
 
     @SubConfig
+    var dynamicKeyBinding = DynamicKeyBindingConfigImpl()
+
+    @SubConfig
     var invincibilityTimer = InvincibilityTimerConfigImpl()
 
     @SubConfig
@@ -43,8 +47,9 @@ object EnchAddonsConfig : Config(Mod("Ench Addons $MOD_VERSION", ModType.SKYBLOC
             .filter { it.returnType.isSubtypeOf(FeatureConfig::class.starProjectedType) }
             .forEach { property ->
                 property(this).let { instance ->
-                    logger.info("detect Config implementation $instance")
+                    logger.info("Detect Config implementation $instance")
                     (instance as Config).initialize()
+                    (instance as ConfigImpl).postInitialized()
                     instance::class.allSuperclasses.plus(instance::class).forEach {
                         configImplMap[it] = { property(this) as FeatureConfig }
                     }
