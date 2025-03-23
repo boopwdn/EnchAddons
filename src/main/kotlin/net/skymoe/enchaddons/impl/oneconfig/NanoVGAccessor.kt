@@ -91,6 +91,18 @@ interface NanoVGAccessor {
         radius: Double,
     )
 
+    fun drawRingRectRounded(
+        vg: Long,
+        x: Double,
+        y: Double,
+        radius: Double,
+        width: Double,
+        height: Double,
+        progress: Double,
+        lineWidth: Double,
+        color: Int,
+    )
+
     fun drawRingArc(
         vg: Long,
         x: Double,

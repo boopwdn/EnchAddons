@@ -16,7 +16,7 @@ import org.lwjgl.nanovg.NanoVGGL3.NVG_IMAGE_NODELETE
 import org.lwjgl.nanovg.NanoVGGL3.nvglCreateImageFromHandle
 import java.nio.ByteBuffer
 import java.util.UUID
-import kotlin.math.asin
+import kotlin.math.*
 
 private fun NVGColor.fill(argb: Int): NVGColor {
     val (rv, gv, bv, av) = convertARGBToDoubleArray(argb)
@@ -55,6 +55,153 @@ object NanoVGAccessorImpl : NanoVGAccessor {
     ) {
         images.forEach {
             nvgDeleteImage(vg, it)
+        }
+    }
+
+    override fun drawRingRectRounded(
+        vg: Long,
+        x: Double,
+        y: Double,
+        radius: Double,
+        width: Double,
+        height: Double,
+        progress: Double,
+        lineWidth: Double,
+        color: Int,
+    ) {
+        if (progress < 0.0) return
+
+        withscope {
+            val nvgColor = NVGColor.calloc().using().fill(color)
+
+            val totalLength = 2 * (width + height) - (8 - 2 * PI) * radius
+            val widthWithoutR = (width - 2 * radius) / totalLength
+            val heightWithoutR = (height - 2 * radius) / totalLength
+            val r = (PI * radius) / (2 * totalLength)
+
+            val progressList =
+                listOf(
+                    0.0,
+                    widthWithoutR * 0.5,
+                    widthWithoutR * 0.5 + r,
+                    widthWithoutR * 0.5 + heightWithoutR + r,
+                    widthWithoutR * 0.5 + heightWithoutR + r * 2.0,
+                    widthWithoutR * 1.5 + heightWithoutR + r * 2.0,
+                    widthWithoutR * 1.5 + heightWithoutR + r * 3.0,
+                    widthWithoutR * 1.5 + heightWithoutR * 2.0 + r * 3.0,
+                    widthWithoutR * 1.5 + heightWithoutR * 2.0 + r * 4.0,
+                    widthWithoutR * 2.0 + heightWithoutR * 2.0 + r * 4.0,
+                    Double.POSITIVE_INFINITY,
+                )
+
+            val (segmentIndex, segmentStart) = progressList.withIndex().first { (i, v) -> v <= progress && progress < progressList[i + 1] }
+
+            val progressInSegment = (progress - segmentStart) / (progressList[segmentIndex + 1] - segmentStart)
+
+            nvgBeginPath(vg)
+            nvgStrokeColor(vg, nvgColor)
+            nvgStrokeWidth(vg, lineWidth.toFloat())
+            nvgLineCap(vg, NVG_ROUND)
+            nvgLineJoin(vg, NVG_ROUND)
+
+            // Calculate the coordinates for the starting point (top-middle)
+            val startX = x + width / 2.0
+            val startY = y
+
+            nvgMoveTo(vg, startX.toFloat(), startY.toFloat())
+
+            // Helper function to draw segments
+            fun drawSegment(
+                segment: Int,
+                segmentProgress: Double,
+            ) {
+                when (segment) {
+                    0 -> { // Top segment
+                        val segmentLength = width - 2 * radius
+                        val currentX = x + width / 2.0 + (segmentLength / 2) * segmentProgress
+                        nvgLineTo(vg, currentX.toFloat(), y.toFloat())
+                    }
+                    1 -> { // Top-Right Corner
+                        val angle = (segmentProgress - 1.0) * PI / 2
+                        nvgArc(
+                            vg,
+                            (x + width - radius).toFloat(),
+                            (y + radius).toFloat(),
+                            radius.toFloat(),
+                            (-PI / 2).toFloat(),
+                            angle.float,
+                            NVG_CW,
+                        )
+                    }
+                    2 -> { // Right segment
+                        val segmentLength = height - 2 * radius
+                        val currentY = y + radius + segmentLength * segmentProgress
+                        nvgLineTo(vg, (x + width).toFloat(), currentY.toFloat())
+                    }
+                    3 -> { // Bottom-Right Corner
+                        val angle = segmentProgress * PI / 2
+                        nvgArc(
+                            vg,
+                            (x + width - radius).toFloat(),
+                            (y + height - radius).toFloat(),
+                            radius.toFloat(),
+                            0f,
+                            angle.float,
+                            NVG_CW,
+                        )
+                    }
+                    4 -> { // Bottom segment
+                        val segmentLength = width - 2 * radius
+                        val currentX = x + width - radius - segmentLength * segmentProgress
+                        nvgLineTo(vg, currentX.toFloat(), (y + height).toFloat())
+                    }
+                    5 -> { // Bottom-Left Corner
+                        val angle = (segmentProgress + 1.0) * PI / 2
+                        nvgArc(
+                            vg,
+                            (x + radius).toFloat(),
+                            (y + height - radius).toFloat(),
+                            radius.toFloat(),
+                            (PI / 2).toFloat(),
+                            angle.float,
+                            NVG_CW,
+                        )
+                    }
+                    6 -> { // Left segment
+                        val segmentLength = height - 2 * radius
+                        val currentY = y + height - radius - segmentLength * segmentProgress
+                        nvgLineTo(vg, x.toFloat(), currentY.toFloat())
+                    }
+                    7 -> { // Top-Left Corner
+                        val angle = (segmentProgress + 2.0) * PI / 2
+                        nvgArc(
+                            vg,
+                            (x + radius).toFloat(),
+                            (y + radius).toFloat(),
+                            radius.toFloat(),
+                            PI.toFloat(),
+                            angle.float,
+                            NVG_CW,
+                        )
+                    }
+                    8 -> { // Top segment (partial, completing the circle)
+                        val segmentLength = width / 2.0 - radius // Half of the width to the center
+                        val currentX = x + radius + segmentLength * segmentProgress
+                        nvgLineTo(vg, currentX.toFloat(), y.toFloat())
+                    }
+                }
+            }
+
+            // Draw all the complete segments up to the current one
+            for (i in 0 until segmentIndex) {
+                drawSegment(i, 1.0)
+            }
+
+            // Draw the last segment, the incomplete one
+            drawSegment(segmentIndex, progressInSegment)
+
+            nvgStroke(vg)
+            nvgClosePath(vg)
         }
     }
 
