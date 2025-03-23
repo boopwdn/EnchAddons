@@ -15,6 +15,10 @@ data class Transformation(
 
     infix fun pos(vec: Vec2D) = offset + vec * scale
 
+    infix fun posX(x: Double) = offset.x + x * scale
+
+    infix fun posY(y: Double) = offset.y + y * scale
+
     infix fun size(num: Double) = num * scale
 
     infix fun size(vec: Vec2D) = vec * scale
