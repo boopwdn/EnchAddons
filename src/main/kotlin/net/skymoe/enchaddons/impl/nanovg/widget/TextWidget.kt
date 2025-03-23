@@ -3,10 +3,13 @@ package net.skymoe.enchaddons.impl.nanovg.widget
 import cc.polyfrost.oneconfig.renderer.font.Font
 import cc.polyfrost.oneconfig.renderer.font.Fonts
 import net.skymoe.enchaddons.impl.nanovg.NanoVGUIContext
+import net.skymoe.enchaddons.impl.nanovg.Transformation
 import net.skymoe.enchaddons.impl.nanovg.Widget
 import net.skymoe.enchaddons.impl.oneconfig.loadFonts
 import net.skymoe.enchaddons.impl.oneconfig.nvg
 import net.skymoe.enchaddons.util.alphaScale
+import net.skymoe.enchaddons.util.general.MutableBox
+import net.skymoe.enchaddons.util.general.inMutableBox
 import net.skymoe.enchaddons.util.math.Vec2D
 import net.skymoe.enchaddons.util.math.double
 import net.skymoe.enchaddons.util.math.float
@@ -21,9 +24,12 @@ data class TextWidget(
     private val anchor: Vec2D = Vec2D(0.0, 0.0),
     private val widthLimit: Double? = null,
     private val ellipsis: String = "",
+    private val trBox: MutableBox<Transformation> = Transformation().inMutableBox,
+    private val onPostRender: (Double) -> Unit = {},
 ) : Widget<TextWidget> {
     override fun draw(context: NanoVGUIContext) {
         context.run {
+            val tr = trBox.value
             nvg.loadFonts(vg)
             val font = font()
             var width = helper.getTextWidth(vg, text, size.float, font).double
@@ -48,7 +54,8 @@ data class TextWidget(
             }
             val x = pos.x - width * anchor.x
             val y = pos.y - size * anchor.y + size / 2.0
-            helper.drawText(vg, textToRender, x.float, y.float, color, size.float, font)
+            helper.drawText(vg, textToRender, (tr posX x).float, (tr posY y).float, color, size.float, font)
+            onPostRender(width)
         }
     }
 
