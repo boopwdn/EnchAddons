@@ -36,6 +36,8 @@ abstract class ConfigImpl(
         field.isAccessible = true
         return handleExtensionOption(this, field, { field[this] }, annotation, page, mod, "${field.name}.")
     }
+
+    open fun postInitialized() {}
 }
 
 private val internalAddOptionToPageMethod: Method by lazy {
