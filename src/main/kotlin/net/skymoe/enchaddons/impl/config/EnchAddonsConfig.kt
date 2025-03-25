@@ -12,18 +12,16 @@ import net.skymoe.enchaddons.impl.config.feature.DynamicKeyBindingConfigImpl
 import net.skymoe.enchaddons.impl.config.feature.DynamicSpotConfigImpl
 import net.skymoe.enchaddons.impl.config.feature.InvincibilityTimerConfigImpl
 import net.skymoe.enchaddons.impl.config.feature.TeamSpeakConnectConfigImpl
+import net.skymoe.enchaddons.impl.config.subcategory.DungeonConfig
 import net.skymoe.enchaddons.util.general.inBox
 import kotlin.reflect.KClass
-import kotlin.reflect.full.allSuperclasses
-import kotlin.reflect.full.declaredMemberProperties
-import kotlin.reflect.full.isSubtypeOf
-import kotlin.reflect.full.starProjectedType
 
-private val logger = getLogger("Config")
+val logger = getLogger("Config")
 
-private val configImplMap = mutableMapOf<KClass<*>, () -> FeatureConfig>()
+object EnchAddonsConfig : Config(Mod("Ench Addons $MOD_VERSION", ModType.SKYBLOCK), "ench_addons.json"), ConfigCategory {
+    @Transient
+    override val configImplMap = mutableMapOf<KClass<*>, () -> FeatureConfig>()
 
-object EnchAddonsConfig : Config(Mod("Ench Addons $MOD_VERSION", ModType.SKYBLOCK), "ench_addons.json") {
     @SubConfig
     var main = MainConfig()
 
@@ -39,22 +37,12 @@ object EnchAddonsConfig : Config(Mod("Ench Addons $MOD_VERSION", ModType.SKYBLOC
     @SubConfig
     var teamSpeakConnectConfig = TeamSpeakConnectConfigImpl()
 
+    @SubConfig
+    var dungeonConfig = DungeonConfig()
+
     init {
         initialize()
-
-        EnchAddonsConfig::class
-            .declaredMemberProperties
-            .filter { it.returnType.isSubtypeOf(FeatureConfig::class.starProjectedType) }
-            .forEach { property ->
-                property(this).let { instance ->
-                    logger.info("Detect Config implementation $instance")
-                    (instance as Config).initialize()
-                    (instance as ConfigImpl).postInitialized()
-                    instance::class.allSuperclasses.plus(instance::class).forEach {
-                        configImplMap[it] = { property(this) as FeatureConfig }
-                    }
-                }
-            }
+        initializeMembers()
     }
 
     override fun load() {
