@@ -12,6 +12,7 @@ import net.minecraft.scoreboard.ScoreObjective
 import net.minecraft.scoreboard.ScorePlayerTeam
 import net.minecraft.util.BlockPos
 import net.minecraft.util.ChatComponentText
+import net.minecraft.util.IChatComponent
 import net.minecraft.util.ResourceLocation
 import net.minecraft.util.Vec3i
 import net.skymoe.enchaddons.feature.config.Color
@@ -70,6 +71,12 @@ fun WorldRenderer.pos(vec: Vec3D): WorldRenderer = pos(vec.x, vec.y, vec.z)
 fun WorldRenderer.tex(vec: Vec2D): WorldRenderer = tex(vec.x, vec.y)
 
 fun WorldRenderer.color(color: Color): WorldRenderer = color(color.r.float, color.g.float, color.b.float, color.a.float)
+
+fun printChat(message: IChatComponent) {
+    MC.theWorld?.let {
+        MC.ingameGUI.chatGUI.printChatMessage(message)
+    }
+}
 
 fun printChat(message: String = "") {
     logger.info("[PRINT CHAT] $message")
