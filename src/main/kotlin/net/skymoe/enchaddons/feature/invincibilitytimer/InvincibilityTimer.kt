@@ -59,7 +59,7 @@ object InvincibilityTimer : FeatureBase<InvincibilityTimerConfig>(INVINCIBILITY_
                 }
             }
 
-            register<ChatEvent.Normal.Post> { event ->
+            register<ChatEvent.Normal.Pre> { event ->
                 INVINCIBILITY_ITEMS.firstOrNull {
                     if (event.message.matches(it.regex)) {
                         InvincibilityTimerEvent
