@@ -25,8 +25,13 @@
 
 ## ✨ **Features** ✨
 
+### General
 *   **DynamicSpot:** A elegant dynamic centralized event notifier.
+*   **DynamicKeyBinding:** Trigger some actions with **just one** key
 *   **InvincibilityTimer:** Active and cooldown time display for invincibility items such as `Spirit Mask`.
+*   **TeamSpeakConnect:** Showing users entering or leaving the TeamSpeak channel.
+### Dungeon  
+* **FastDraft:** Triggers the `Get a draft` event when a player fails a puzzle.
 
 ---
 
