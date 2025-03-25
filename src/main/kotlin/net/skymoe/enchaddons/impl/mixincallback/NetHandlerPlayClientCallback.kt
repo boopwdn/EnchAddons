@@ -9,13 +9,15 @@ import net.skymoe.enchaddons.util.math.int
 import net.skymoe.enchaddons.util.trimStyle
 
 object NetHandlerPlayClientCallback {
-    fun onS02PacketChatPost(packet: S02PacketChat) {
+    fun onS02PacketChatPre(packet: S02PacketChat) {
         when (packet.type.int) {
             2 -> {}
             else -> {
                 ChatEvent.Normal
-                    .Post(packet.chatComponent.formattedText.trimStyle)
-                    .also(EA.eventDispatcher)
+                    .Pre(
+                        packet.chatComponent.formattedText.trimStyle,
+                        packet.chatComponent.formattedText,
+                    ).also(EA.eventDispatcher)
             }
         }
     }
