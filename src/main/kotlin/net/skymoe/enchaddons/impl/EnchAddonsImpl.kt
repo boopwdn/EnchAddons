@@ -4,6 +4,7 @@ import net.skymoe.enchaddons.EnchAddons
 import net.skymoe.enchaddons.event.minecraft.MinecraftEvent
 import net.skymoe.enchaddons.event.register
 import net.skymoe.enchaddons.feature.config.FeatureConfig
+import net.skymoe.enchaddons.feature.dungeon.fastdraft.FastDraft
 import net.skymoe.enchaddons.feature.dynamickeybind.DynamicKeyBinding
 import net.skymoe.enchaddons.feature.dynamicspot.DynamicSpot
 import net.skymoe.enchaddons.feature.invincibilitytimer.InvincibilityTimer
@@ -68,6 +69,8 @@ class EnchAddonsImpl : EnchAddons {
 
         TeamSpeakConnect
         TeamSpeakConnectHUD
+
+        FastDraft
 
         eventDispatcher.register<MinecraftEvent.Load.Post> {
             loadHypixelModAPI
