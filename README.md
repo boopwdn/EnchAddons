@@ -38,7 +38,7 @@
 ## 🛠️ Installation Guide 🛠️
 
 1.  **Prerequisites:** Make sure you have Minecraft 1.8.9 installed with **Forge Mod Loader**.
-2.  **Download Mod:** Download the latest jar file from [**Releases**](https://github.com/boopwdn/EnchAddons/releases) or [**Actions**](https://github.com/boopwdn/EnchAddons/actions). **Do not download from other sources.**
+2.  **Download Mod:** Download the latest jar file from [**Modrinth**](https://modrinth.com/mod/enchaddons), [**Github Releases**](https://github.com/boopwdn/EnchAddons/releases) or [**Github Actions**](https://github.com/boopwdn/EnchAddons/actions). **Do not download from other sources.**
 3.  **Install Mod:** Place the downloaded `EnchAddons-x.x.x.jar` file into your Minecraft's `mods` folder.
 4.  **Launch Game:** Launch Minecraft and enable the features you want to use.
 5.  **Enjoy the game!**
