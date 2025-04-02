@@ -37,6 +37,12 @@ class MainConfig : ConfigImpl(featureInfo<FeatureConfig>("main", "General")) {
     )
     var disableBlockAccess = false
 
+    @Switch(
+        name = "Disable F1 Hide GUI",
+        size = 1,
+    )
+    var disableF1 = false
+
     @Transient
     @Header(
         text = "Debug Flags",
