@@ -31,15 +31,24 @@ object FastDraft : FeatureBase<FastDraftConfig>(FAST_DRAFT_INFO) {
                     puzzleFailPatterns.forEach { pattern ->
                         pattern.matchEntire(event.messageRaw)?.let { matchResult ->
                             if (config.chatHintEnabled) {
-                                val name = matchResult.groups["name"]?.value
+                                val name = matchResult.groups["name"]?.value ?: return@forEach
+
                                 val message =
-                                    (
-                                        "§c§lPUZZLE FAILED! §r§b$name §r§efailed a puzzle. \n" +
-                                            "§eClick here to get §5Architect's First Draft"
-                                    ).asComponent().also {
+                                    buildComponent {
+                                        "PUZZLE FAILED ".red.bold
+                                        "$name ".aqua
+                                        "failed a puzzle.".yellow
+                                        "\n".append
+                                        "Click here to get ".yellow
+                                        "Architect's First Draft".darkPurple
+                                    }.also {
                                         it.command = "/gfs architect_first_draft"
-                                        it.hover = "§eClick to get from sacks!".asComponent()
+                                        it.hover =
+                                            buildComponent {
+                                                "Click to get from sacks!".yellow
+                                            }
                                     }
+
                                 printChat(message)
                             }
 
