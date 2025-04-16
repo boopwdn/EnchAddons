@@ -64,3 +64,9 @@ Contributions are welcome! Feel free to submit issues and pull requests.
 ## 📄 License 📄
 
 This project is licensed under the [GPLv2 License](LICENSE).
+
+---
+
+## 🐱 能想出这个的家里真得请哈基高了 🐱
+
+[![EnchAddons](https://raw.githubusercontent.com/boopwdn/EnchAddons/refs/heads/EnchStudio-patch-1/ycdd.jpg)](https://github.com/boopwdn/EnchAddons)
