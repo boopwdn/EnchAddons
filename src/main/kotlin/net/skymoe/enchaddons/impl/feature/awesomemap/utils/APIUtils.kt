@@ -28,20 +28,25 @@ object APIUtils {
 
     fun hasBonusPaulScore(): Boolean {
         val response = fetch("https://api.hypixel.net/resources/skyblock/election") ?: return false
-        val jsonObject = JsonParser().parse(response).toJsonObject() ?: return false
-        if (jsonObject.getJsonPrimitive("success")?.asBoolean == true) {
-            val mayor = jsonObject.getJsonObject("mayor") ?: return false
-            val name = mayor.getJsonPrimitive("name")?.asString
-            if (name == "Paul") {
-                return mayor.getJsonArray("perks")?.any {
-                    it.toJsonObject()?.getJsonPrimitive("name")?.asString == "EZPZ"
-                } ?: false
+        try {
+            val jsonObject = JsonParser().parse(response).toJsonObject() ?: return false
+            if (jsonObject.getJsonPrimitive("success")?.asBoolean == true) {
+                val mayor = jsonObject.getJsonObject("mayor") ?: return false
+                val name = mayor.getJsonPrimitive("name")?.asString
+                if (name == "Paul") {
+                    return mayor.getJsonArray("perks")?.any {
+                        it.toJsonObject()?.getJsonPrimitive("name")?.asString == "EZPZ"
+                    } ?: false
+                }
+                val minister = mayor.getJsonObject("minister") ?: return false
+                val ministerName = minister.getJsonPrimitive("name")?.asString
+                if (ministerName == "Paul") {
+                    return minister.getJsonObject("perk")?.getJsonPrimitive("name")?.asString == "EZPZ"
+                }
             }
-            val minister = mayor.getJsonObject("minister") ?: return false
-            val ministerName = minister.getJsonPrimitive("name")?.asString
-            if (ministerName == "Paul") {
-                return minister.getJsonObject("perk")?.getJsonPrimitive("name")?.asString == "EZPZ"
-            }
+        } catch (e: Exception) {
+            println(response)
+            e.printStackTrace()
         }
         return false
     }
